@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:milky_management/DBHelper.dart';
+import 'package:milky_management/db_helper.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Calendarscreen extends StatefulWidget {
@@ -10,7 +10,7 @@ class Calendarscreen extends StatefulWidget {
 }
 
 class _CalendarscreenState extends State<Calendarscreen> {
-  final Dbhelper db = Dbhelper();
+  final DbHelper db = DbHelper();
 
   Map<DateTime, int> logs = {};
 

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:milky_management/DBHelper.dart';
+import 'package:milky_management/db_helper.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 
 class Toady extends StatefulWidget {
    Toady({super.key});
- final Dbhelper db = Dbhelper();
+ final DbHelper db = DbHelper();
 
   @override
   State<Toady> createState() => _ToadyState();
@@ -17,7 +17,7 @@ class _ToadyState extends State<Toady> {
   late String today = "";
   late String englishDay = DateFormat("EEEE").format(DateTime.now());
   late String day = DateFormat("EEEE").format(DateTime.now());
-  final Dbhelper db = Dbhelper();
+  final DbHelper db = DbHelper();
 
   void changeToKannada() {
     if(day=="Monday") {

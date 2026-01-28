@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:milky_management/DBHelper.dart';
+import 'package:milky_management/db_helper.dart';
 
 class Historypages extends StatefulWidget {
    Historypages({super.key});
@@ -9,7 +9,7 @@ class Historypages extends StatefulWidget {
 }
 
 class _HistorypagesState extends State<Historypages> {
-  final Dbhelper db = Dbhelper();
+  final DbHelper db = DbHelper();
   List<Map<String,dynamic>> logs = [];
   TextEditingController password = TextEditingController();
   TextEditingController date = TextEditingController();

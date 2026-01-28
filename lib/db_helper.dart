@@ -3,7 +3,7 @@ import 'dart:ffi';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class Dbhelper {
+class DbHelper {
   static Database? _db;
 
   Future<Database> get db async {
