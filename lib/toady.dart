@@ -3,7 +3,7 @@ import 'package:lottie/lottie.dart';
 import 'package:milky_management/db_helper.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-
+import 'taker.dart';
 
 class Toady extends StatefulWidget {
    Toady({super.key});
@@ -91,6 +91,11 @@ class _ToadyState extends State<Toady> {
             const SizedBox(height: 10,),
             ElevatedButton(onPressed: () async{
               await db.saveLog(today, 0);
+              taker.debug("Button clicked");
+              taker.info("Milk marked as bought");
+              taker.warning("Duplicate entry");
+              taker.error("DB error");
+
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Marked as not  Bought"),backgroundColor: Colors.red,));
             }, style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,

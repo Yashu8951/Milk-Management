@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:milky_management/taker.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -33,7 +34,10 @@ class DbHelper {
 
   Future<void> saveLog(String date, int bought) async {
     final database = await db;
-
+    taker.debug("Button clicked");
+    taker.info("Milk marked as bought");
+    taker.warning("Duplicate entry");
+    taker.error("DB error");
     await database.insert(
       "milk_logs",
       {
@@ -79,23 +83,6 @@ class DbHelper {
   }
 
 
-  Future<String> updatePrevious(String date ,int newBought) async {
-    try{
-    final database = await db;
-    int result= await database.update("milk_logs", {
-      'bought':newBought
-    },
-        where: 'date = ?',
-    whereArgs: [date]);
-    if(result >0) {
-      return "Update done";
-    }else {
-      return "No date is found";
-    }
-  }catch(e) {
-      return "invaild date $e";
-    }
-  }
   Future<void> deletedate() async
   {
     final database = await db;

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:milky_management/BackGroundTask/background_task.dart';
 import 'package:milky_management/calendarscreen.dart';
 import 'package:milky_management/historypages.dart';
 import 'package:milky_management/toady.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await BackgroundTask.init();
   runApp(const MyApp());
 }
 
@@ -28,6 +31,12 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
   int index = 0;
   final pages = [
     Toady(),

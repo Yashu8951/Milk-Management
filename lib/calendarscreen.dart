@@ -53,14 +53,6 @@ class _CalendarscreenState extends State<Calendarscreen> {
         throw Exception("Bought must be 0 or 1");
       }
 
-      String message = await db.updatePrevious(date, bought);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message),
-          backgroundColor: Colors.green,
-        ),
-      );
 
       dateController.clear();
       boughtController.clear();
