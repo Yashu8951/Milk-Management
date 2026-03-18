@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:milky_management/BackGroundTask/background_task.dart';
+import 'package:milky_management/BackGroundTask/premission.dart';
 import 'package:milky_management/calendarscreen.dart';
 import 'package:milky_management/historypages.dart';
 import 'package:milky_management/toady.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  req();
   await BackgroundTask.init();
   runApp(const MyApp());
 }

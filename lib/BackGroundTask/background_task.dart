@@ -1,35 +1,71 @@
 import 'dart:async';
-
 import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:flutter_background_service_android/flutter_background_service_android.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:milky_management/db_helper.dart';
+
 @pragma('vm:entry-point')
 class BackgroundTask {
- static Future<void> init() async {
+
+  static Future<void> init() async {
+
     final service = FlutterBackgroundService();
+
+    final FlutterLocalNotificationsPlugin notifications =
+    FlutterLocalNotificationsPlugin();
+
+    /// initialize notification plugin
+    const AndroidInitializationSettings androidSettings =
+    AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    const InitializationSettings settings =
+    InitializationSettings(android: androidSettings);
+
+    await notifications.initialize(settings);
+
+    /// create notification channel
+    const AndroidNotificationChannel channel = AndroidNotificationChannel(
+      'background_service',
+      'Milk Background Service',
+      description: 'Background service for milk management',
+      importance: Importance.low,
+    );
+
+    await notifications
+        .resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
 
     await service.configure(
       iosConfiguration: IosConfiguration(),
       androidConfiguration: AndroidConfiguration(
         onStart: onStart,
-        isForegroundMode: true,
         autoStart: true,
+        isForegroundMode: true,
+
         notificationChannelId: 'background_service',
-        initialNotificationTitle: 'Background Service',
-        initialNotificationContent: 'Service is running',
+        initialNotificationTitle: 'Milk Management',
+        initialNotificationContent: 'Background service running',
         foregroundServiceNotificationId: 888,
       ),
     );
+
+    service.startService();
   }
+
   @pragma('vm:entry-point')
-  static void onStart(ServiceInstance serviceInstance) async {
-    DbHelper  db = DbHelper();
-    if (serviceInstance is AndroidServiceInstance) {
-      serviceInstance.setForegroundNotificationInfo(
-        title: "Background Running",
-        content: "Milk Management",
+  static void onStart(ServiceInstance service) async {
+
+    DbHelper db = DbHelper();
+
+    if (service is AndroidServiceInstance) {
+      service.setForegroundNotificationInfo(
+        title: "Milk Management",
+        content: "Background running",
       );
     }
-    Timer.periodic(Duration(hours: 4), (timer) async {
+
+    Timer.periodic(const Duration(hours: 4), (timer) async {
       await db.autoFillYesterday();
     });
   }
