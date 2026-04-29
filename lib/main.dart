@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:milky_management/BackGroundTask/background_task.dart';
 import 'package:milky_management/BackGroundTask/premission.dart';
 import 'package:milky_management/calendarscreen.dart';
 import 'package:milky_management/historypages.dart';
 import 'package:milky_management/toady.dart';
+import 'package:flutter_performance_optimizer/flutter_performance_optimizer.dart';
 
 void main() async {
+  debugRepaintRainbowEnabled = true;
+  debugPrintRebuildDirtyWidgets = true;
   WidgetsFlutterBinding.ensureInitialized();
   req();
-  await BackgroundTask.init();
+  // await BackgroundTask.init();
   runApp(const MyApp());
 }
 
@@ -20,6 +24,25 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Homepage(),
+      builder: (context, child) {
+        return PerformanceOptimizer(
+          showDashboard: true,
+          showHeatmap: true,
+          trackRebuilds: true,
+          trackMemory: true,
+          trackAnimations: true,
+          trackWidgetDepth: true,
+          trackSetState: true,
+          logWarnings: true,
+          onWarning: (warning) {
+            debugPrint('⚡ ${warning.message}');
+            if (warning.suggestion != null) {
+              debugPrint('👉 ${warning.suggestion}');
+            }
+          },
+          child: child!,
+        );
+      },
 
     );
   }

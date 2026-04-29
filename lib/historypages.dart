@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:milky_management/db_helper.dart';
 
 class Historypages extends StatefulWidget {
-   Historypages({super.key});
+  Historypages({super.key});
 
   @override
   State<Historypages> createState() => _HistorypagesState();
@@ -10,7 +10,7 @@ class Historypages extends StatefulWidget {
 
 class _HistorypagesState extends State<Historypages> {
   final DbHelper db = DbHelper();
-  List<Map<String,dynamic>> logs = [];
+  List<Map<String, dynamic>> logs = [];
   TextEditingController password = TextEditingController();
   TextEditingController date = TextEditingController();
   TextEditingController brought = TextEditingController();
@@ -21,26 +21,24 @@ class _HistorypagesState extends State<Historypages> {
     super.initState();
     load();
   }
-  
+
   Future<String> delete() async {
     password.text;
     String adminpassword = "yash123";
-    if(adminpassword==password.text) {
-db.deletedate();
-load();
-return "done";
+    if (adminpassword == password.text) {
+      db.deletedate();
+      load();
+      return "done";
     } else {
       return "not done";
     }
-    
   }
 
-  void load() async{
+  void load() async {
     logs = await db.getLogs();
-    setState(() {
-
-    });
-}
+    setState(() {});
+  }
+  int count = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -85,26 +83,51 @@ return "done";
                 const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () async {
-     String mess = await delete();
-     if(mess == 'done') {
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('done',style: TextStyle(color: Colors.black)),backgroundColor: Colors.limeAccent,));
-    } else {
-       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(mess),backgroundColor: Colors.red,));
-     }
-
-
-
-     },style:  ElevatedButton.styleFrom(minimumSize: Size(20, 40),
-                  backgroundColor: Colors.red,
-                  shape: RoundedRectangleBorder(),),
-                  child: const Text("Delete",style: TextStyle(color: Colors.white),),
+                    String mess = await delete();
+                    if (mess == 'done') {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'done',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          backgroundColor: Colors.limeAccent,
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(mess),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(20, 40),
+                    backgroundColor: Colors.red,
+                    shape: RoundedRectangleBorder(),
+                  ),
+                  child: const Text(
+                    "Delete",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
+                Text("Count: $count"),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      count++;
+                    });
+                  },
+                  child: Text("Rebuild"),
+                )
+
               ],
             ),
           ),
         ],
       ),
     );
-
   }
 }
